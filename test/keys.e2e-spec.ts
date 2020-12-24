@@ -1,5 +1,4 @@
 import * as request from 'supertest';
-import {v4 as uuidv4} from 'uuid';
 import {Test} from '@nestjs/testing';
 import {AppModule} from 'src/app.module';
 import {INestApplication} from '@nestjs/common';
@@ -20,6 +19,8 @@ describe('Keys', () => {
 		})
 			.overrideProvider(ConfigService)
 			.useValue(configService)
+			.overrideProvider(PrismaService)
+			.useValue({})
 			.compile();
 
 		app = moduleRef.createNestApplication();
