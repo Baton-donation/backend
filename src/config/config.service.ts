@@ -1,19 +1,19 @@
-import * as dotenv from 'dotenv'
-import { Injectable } from '@nestjs/common';
+import * as dotenv from 'dotenv';
+import {Injectable} from '@nestjs/common';
 
 interface IEnv {
-  PUBLIC_KEY: string;
+	PUBLIC_KEY: string;
 }
 
 @Injectable()
 export class ConfigService {
-  public env: IEnv;
+	public env: IEnv;
 
-  constructor() {
-    dotenv.config()
+	constructor() {
+		dotenv.config();
 
-    this.env = {
-      PUBLIC_KEY: process.env.PUBLIC_KEY as string
-    }
-  }
+		this.env = {
+			PUBLIC_KEY: process.env.PUBLIC_KEY as string
+		};
+	}
 }

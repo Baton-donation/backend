@@ -1,16 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
-import { SentenceDto } from './types';
+import {Injectable} from '@nestjs/common';
+import {PrismaService} from 'src/prisma.service';
+import {SentenceDto} from './types';
 
 @Injectable()
 export class SentencesService {
-  constructor(private prisma: PrismaService) {}
-  
-  async create(sentence: SentenceDto): Promise<SentenceDto> {
-    return this.prisma.sentence.create({data: sentence});
-  }
+	constructor(private readonly prisma: PrismaService) {}
 
-  async delete(uuid: string) {
-    await this.prisma.sentence.delete({where: {uuid}});
-  }
+	async create(sentence: SentenceDto): Promise<SentenceDto> {
+		return this.prisma.sentence.create({data: sentence});
+	}
+
+	async delete(uuid: string) {
+		await this.prisma.sentence.delete({where: {uuid}});
+	}
 }

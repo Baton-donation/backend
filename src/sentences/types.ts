@@ -1,14 +1,14 @@
-import { IsNotEmpty, IsUUID } from "class-validator";
+import {IsNotEmpty, IsUUID} from 'class-validator';
 
 export class SentenceDto {
-  @IsUUID("4")
-  uuid!: string;
+	@IsUUID('4')
+	uuid!: string;
 
-  @IsNotEmpty()
-  content!: string;
+	@IsNotEmpty()
+	content!: string;
 }
 
-export class DeleteParams {
-  @IsUUID("4")
-  uuid!: string;
+export class DeleteParameters {
+	@IsUUID('4')
+	uuid!: string;
 }
