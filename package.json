@@ -44,6 +44,7 @@
     "@types/node": "^14.14.16",
     "@types/supertest": "^2.0.10",
     "@types/uuid": "^8.3.0",
+    "eslint-plugin-unused-imports": "^1.0.1",
     "husky": "^4.3.6",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.3",
@@ -62,6 +63,7 @@
     ]
   },
   "xo": {
+    "plugins": ["unused-imports"],
     "rules": {
       "new-cap": [
         "error",
@@ -69,7 +71,18 @@
           "capIsNewExceptionPattern": "@*"
         }
       ],
-      "import/extensions": "off"
+      "import/extensions": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "unused-imports/no-unused-imports-ts": "error",
+      "unused-imports/no-unused-vars-ts": [
+        "warn",
+        {
+          "vars": "all",
+          "varsIgnorePattern": "^_",
+          "args": "after-used",
+          "argsIgnorePattern": "^_"
+        }
+      ]
     }
   }
 }

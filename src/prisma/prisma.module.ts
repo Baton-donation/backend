@@ -1,4 +1,3 @@
-import {BullModule} from '@nestjs/bull';
 import {Module} from '@nestjs/common';
 import {PrismaService} from './prisma.service';
 
