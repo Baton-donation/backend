@@ -13,4 +13,5 @@ generator client {
 model Sentence {
   uuid String @id
   content String
+  createdAt DateTime @default(now())
 }
