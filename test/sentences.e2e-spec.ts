@@ -3,7 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 import {Test} from '@nestjs/testing';
 import {AppModule} from 'src/app.module';
 import {INestApplication} from '@nestjs/common';
-import {PrismaService} from 'src/prisma.service';
+import {PrismaService} from 'src/prisma/prisma.service';
 
 describe('Sentences', () => {
 	let app: INestApplication;

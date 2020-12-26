@@ -2,7 +2,7 @@ import * as request from 'supertest';
 import {Test} from '@nestjs/testing';
 import {AppModule} from 'src/app.module';
 import {INestApplication} from '@nestjs/common';
-import {PrismaService} from 'src/prisma.service';
+import {PrismaService} from 'src/prisma/prisma.service';
 import {ConfigService} from 'src/config/config.service';
 
 describe('Keys', () => {
