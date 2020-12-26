@@ -8,11 +8,7 @@ import {KeysModule} from './keys/keys.module';
 @Module({
 	imports: [
 		BullModule.forRoot({
-			// TODO: use env var
-			redis: {
-				host: 'localhost',
-				port: 6379
-			}
+			redis: process.env.REDIS_URL as string
 		}),
 		PrismaModule,
 		SentencesModule,

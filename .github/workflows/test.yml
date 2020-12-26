@@ -37,3 +37,5 @@ jobs:
 
       - name: Test
         run: yarn test
+        env:
+          REDIS_URL: 'redis:6379'
