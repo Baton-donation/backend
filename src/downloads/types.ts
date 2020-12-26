@@ -4,3 +4,8 @@ export class GetParameters {
 	@IsNotEmpty()
 	id!: string;
 }
+
+export interface IJobData {
+	uuid: string;
+
+}

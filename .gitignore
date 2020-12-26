@@ -1,5 +1,6 @@
 # Local development files
 prisma/dev.db
+data
 
 # Logs
 logs

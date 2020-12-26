@@ -26,6 +26,8 @@
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "make-dir": "^3.1.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
@@ -63,7 +65,9 @@
     ]
   },
   "xo": {
-    "plugins": ["unused-imports"],
+    "plugins": [
+      "unused-imports"
+    ],
     "rules": {
       "new-cap": [
         "error",
