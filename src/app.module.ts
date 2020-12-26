@@ -1,13 +1,25 @@
 import {Module} from '@nestjs/common';
-import {PrismaService} from './prisma.service';
-import {SentencesController} from './sentences/sentences.controller';
-import {SentencesService} from './sentences/sentences.service';
-import {ConfigService} from './config/config.service';
-import {KeysController} from './keys/keys.controller';
+import {BullModule} from '@nestjs/bull';
+import {DownloadsModule} from './downloads/downloads.module';
+import {PrismaModule} from './prisma/prisma.module';
+import {SentencesModule} from './sentences/sentences.module';
+import {KeysModule} from './keys/keys.module';
 
 @Module({
-	imports: [],
-	controllers: [SentencesController, KeysController],
-	providers: [SentencesService, PrismaService, ConfigService]
+	imports: [
+		BullModule.forRoot({
+			// TODO: use env var
+			redis: {
+				host: 'localhost',
+				port: 6379
+			}
+		}),
+		PrismaModule,
+		SentencesModule,
+		DownloadsModule,
+		KeysModule
+	],
+	controllers: [],
+	providers: []
 })
 export class AppModule {}
