@@ -12,12 +12,21 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Wait on lint
+        uses: lewagon/wait-on-check-action@master
+        with:
+          ref: ${{ github.sha }}
+          check-name: lint
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
       - name: Wait on tests
         uses: lewagon/wait-on-check-action@master
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.sha }}
+          check-name: test
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 20 # seconds
+          wait-interval: 10
 
       - name: Don't allow concurrent deploys
         uses: softprops/turnstyle@v1
