@@ -5,7 +5,7 @@ import {Sentence} from '@prisma/client';
 import {v4 as uuidv4} from 'uuid';
 import * as delay from 'delay';
 import {PrismaService} from 'src/prisma/prisma.service';
-import {DownloadsModule} from 'src/downloads/downloads.module';
+import {AppModule} from 'src/app.module';
 import {decompressNDJSON} from './helpers/gzip';
 
 const generateSampleSentences = (count: number): Sentence[] => Array.from(new Array(count).keys()).map(n => ({
@@ -27,7 +27,7 @@ describe('Downloads', () => {
 	beforeAll(async () => {
 		const moduleRef = await Test.createTestingModule({
 			imports: [
-				DownloadsModule
+				AppModule
 			]
 		})
 			.overrideProvider(PrismaService)
