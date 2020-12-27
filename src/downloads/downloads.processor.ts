@@ -35,7 +35,7 @@ export class DownloadsProcessor {
 			for (let i = 0; i < count; i += CHUNK_SIZE) {
 				// eslint-disable-next-line no-await-in-loop
 				const rows = await this.prisma.sentence.findMany({
-					skip: i * CHUNK_SIZE,
+					skip: i,
 					take: CHUNK_SIZE,
 					orderBy: {
 						createdAt: 'desc'
@@ -56,7 +56,8 @@ export class DownloadsProcessor {
 			await job.progress(1);
 		} catch (error: unknown) {
 			await job.progress(-1);
-			this.logger.error(error);
+
+			this.logger.error((error as Error).message, (error as Error).stack);
 		}
 	}
 }
