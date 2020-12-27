@@ -51,7 +51,7 @@ describe('Downloads', () => {
 			.post('/downloads');
 
 		// Wait for download to be processed
-		await delay(1000);
+		await delay(3000);
 
 		const baseFindManyOptions = {
 			orderBy: {
