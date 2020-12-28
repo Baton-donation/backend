@@ -41,3 +41,18 @@ jobs:
         env:
           REDIS_URL: 'redis:6379'
           DATA_DIR: 'data'
+
+      - name: Get coverage
+        run: yarn coverage
+        env:
+          REDIS_URL: 'redis:6379'
+          DATA_DIR: 'data'
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./test/coverage/coverage-final.json
+          flags: e2e
+          fail_ci_if_error: true
+
