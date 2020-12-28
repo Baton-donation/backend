@@ -52,7 +52,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./test/coverage/coverage-final.json
+          file: ./coverage/coverage-final.json
           flags: e2e
           fail_ci_if_error: true
 
