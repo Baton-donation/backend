@@ -26,8 +26,16 @@ export class DownloadsController {
 			return stream.pipe(response);
 		}
 
-		if (download.progress() === -1) {
-			throw new HttpException('Download errored out', HttpStatus.INTERNAL_SERVER_ERROR);
+		const error = download.progress() === -1 ? new HttpException('Download errored out', HttpStatus.INTERNAL_SERVER_ERROR) : new HttpException('Download is not yet ready', HttpStatus.BAD_REQUEST);
+		throw error;
+	}
+
+	@Get(':id/progress')
+	async getDownloadProgress(@Param() parameters: GetParameters) {
+		const download = await this.downloadsService.get(parameters.id);
+
+		if (!download) {
+			throw new HttpException('Download does not exist', HttpStatus.NOT_FOUND);
 		}
 
 		return {progress: download.progress()};
