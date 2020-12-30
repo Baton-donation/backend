@@ -10,6 +10,7 @@ import {decompressNDJSON} from './helpers/gzip';
 
 const generateSampleSentences = (count: number): Sentence[] => Array.from(new Array(count).keys()).map(n => ({
 	uuid: uuidv4(),
+	anonymousUUID: uuidv4(),
 	createdAt: new Date(),
 	content: `This is the ${n} sentence.`
 }));

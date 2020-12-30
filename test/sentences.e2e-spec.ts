@@ -39,6 +39,19 @@ describe('Sentences', () => {
 		expect(spy).toHaveBeenCalledWith({data: payload});
 	});
 
+	it('/POST sentences with anonymous UUID', async () => {
+		const payload = {uuid: uuidv4(), content: 'A sample sentence', anonymousUUID: uuidv4()};
+
+		const spy = jest.spyOn(prismaService.sentence, 'create');
+
+		await request(app.getHttpServer())
+			.post('/sentences')
+			.send(payload)
+			.expect(201, payload);
+
+		expect(spy).toHaveBeenCalledWith({data: payload});
+	});
+
 	it('/DELETE sentences', async () => {
 		const uuid = uuidv4();
 
