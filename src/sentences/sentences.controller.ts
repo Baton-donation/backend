@@ -21,6 +21,21 @@ export class SentencesController {
 		}
 	}
 
+	@Post('many')
+	async createMultipleSentences(@Body() body: SentenceDto[]) {
+		try {
+			const s = await Promise.all(body.map(async sentence => this.sentencesService.create(sentence)));
+
+			return s;
+		} catch (error: unknown) {
+			if ((error as PrismaClientKnownRequestError).code === 'P2002') {
+				throw new HttpException('UUID already exists', HttpStatus.BAD_REQUEST);
+			}
+
+			throw error;
+		}
+	}
+
 	@Delete(':uuid')
 	async deleteSentence(@Param() parameters: DeleteParameters) {
 		try {
