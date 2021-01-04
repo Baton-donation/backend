@@ -9,7 +9,11 @@ export const decompressNDJSON = async <T>(request: Test) => {
 	return new Promise<T[]>((resolve, reject) => {
 		request.pipe(gzip).pipe(ndjson.parse())
 			.on('data', data => buffer.push(data))
-			.on('end', () => resolve(buffer))
-			.on('error', error => reject(error));
+			.on('end', () => {
+				resolve(buffer);
+			})
+			.on('error', error => {
+				reject(error);
+			});
 	});
 };

@@ -14,8 +14,8 @@ export class ConfigService {
 		dotenv.config();
 
 		this.env = {
-			PUBLIC_KEY: process.env.PUBLIC_KEY as string,
-			DATA_DIR: process.env.DATA_DIR as string
+			PUBLIC_KEY: process.env.PUBLIC_KEY!,
+			DATA_DIR: process.env.DATA_DIR!
 		};
 	}
 }

@@ -8,7 +8,7 @@ import {KeysModule} from './keys/keys.module';
 @Module({
 	imports: [
 		BullModule.forRoot({
-			redis: process.env.REDIS_URL as string
+			redis: process.env.REDIS_URL!
 		}),
 		PrismaModule,
 		SentencesModule,
