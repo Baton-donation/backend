@@ -11,7 +11,7 @@
     "start": "node dist/main",
     "test": "jest --config ./test/jest-e2e.json --forceExit",
     "test:watch": "jest --config ./test/jest-e2e.json --watch",
-    "coverage": "jest --config ./test/jest-e2e.json --coverage --forceExit",
+    "test:coverage": "jest --config ./test/jest-e2e.json --coverage --forceExit",
     "lint": "xo",
     "lint-fix": "xo --fix",
     "makemigrations": "prisma migrate dev --preview-feature",
