@@ -8,6 +8,8 @@ import {PrismaService} from 'src/prisma/prisma.service';
 import {AppModule} from 'src/app.module';
 import {decompressNDJSON} from './helpers/gzip';
 
+// Note: this test fails if the testing process and the dev server share the same Redis connection.
+
 const generateSampleSentences = (count: number): Sentence[] => Array.from(new Array(count).keys()).map(n => ({
 	uuid: uuidv4(),
 	anonymousUUID: uuidv4(),
