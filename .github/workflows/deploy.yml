@@ -12,10 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Wait on all checks (test and lint)
+      - name: Wait on lint
         uses: lewagon/wait-on-check-action@master
         with:
           ref: ${{ github.sha }}
+          check-name: lint
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
+      - name: Wait on tests
+        uses: lewagon/wait-on-check-action@master
+        with:
+          ref: ${{ github.sha }}
+          check-name: test
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
