@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Wait on lint
-        uses: lewagon/wait-on-check-action@master
+        uses: lewagon/wait-on-check-action@v0.1
         with:
           ref: ${{ github.sha }}
           check-name: lint
@@ -21,7 +21,7 @@ jobs:
           wait-interval: 10
 
       - name: Wait on tests
-        uses: lewagon/wait-on-check-action@master
+        uses: lewagon/wait-on-check-action@v0.1
         with:
           ref: ${{ github.sha }}
           check-name: test
