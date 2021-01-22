@@ -16,3 +16,8 @@ model Sentence {
   anonymousUUID String?
   createdAt DateTime @default(now())
 }
+
+model UserDetails {
+  uuid String @id
+  data Json
+}
