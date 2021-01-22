@@ -1,11 +1,11 @@
-import {IsObject, IsUUID} from 'class-validator';
+import {IsString, IsUUID} from 'class-validator';
 
 export class UserDetailsDto {
 	@IsUUID('4')
 	uuid!: string;
 
-	@IsObject()
-	data!: Record<string, unknown>;
+	@IsString()
+	encryptedData!: string;
 }
 
 export class DeleteParameters {

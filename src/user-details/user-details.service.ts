@@ -7,9 +7,11 @@ export class UserDetailsService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async create(details: UserDetailsDto): Promise<UserDetailsDto> {
-		const instance = await this.prisma.userDetails.create({data: details});
+		return this.prisma.userDetails.create({data: details});
+	}
 
-		return {...instance, data: instance.data! as Record<string, unknown>};
+	async get(): Promise<UserDetailsDto[]> {
+		return this.prisma.userDetails.findMany();
 	}
 
 	async delete(uuid: string) {

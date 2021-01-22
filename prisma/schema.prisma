@@ -19,5 +19,5 @@ model Sentence {
 
 model UserDetails {
   uuid String @id
-  data Json
+  encryptedData String
 }

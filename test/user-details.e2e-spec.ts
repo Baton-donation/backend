@@ -10,7 +10,8 @@ describe('User Details', () => {
 	const prismaService = {
 		userDetails: {
 			create: async (payload: any) => Promise.resolve(payload.data),
-			delete: async () => Promise.resolve()
+			delete: async () => Promise.resolve(),
+			findMany: jest.fn()
 		}
 	};
 
@@ -29,10 +30,7 @@ describe('User Details', () => {
 	it('/POST user details', async () => {
 		const payload = {
 			uuid: uuidv4(),
-			data: {
-				key: 'value',
-				anotherKey: 'anotherValue'
-			}
+			encryptedData: ''
 		};
 
 		const spy = jest.spyOn(prismaService.userDetails, 'create');
@@ -43,6 +41,19 @@ describe('User Details', () => {
 			.expect(201, payload);
 
 		expect(spy).toHaveBeenCalledWith({data: payload});
+	});
+
+	it('/GET user details', async () => {
+		const models = [{
+			uuid: uuidv4(),
+			encryptedData: ''
+		}];
+
+		prismaService.userDetails.findMany.mockResolvedValue(models);
+
+		await request(app.getHttpServer())
+			.get('/user-details')
+			.expect(200, models);
 	});
 
 	it('/DELETE user details', async () => {

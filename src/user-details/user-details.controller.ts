@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
 import {PrismaClientKnownRequestError} from '@prisma/client';
 import {DeleteParameters, UserDetailsDto} from './types';
 import {UserDetailsService} from './user-details.service';
@@ -19,6 +19,11 @@ export class UserDetailsController {
 
 			throw error;
 		}
+	}
+
+	@Get()
+	async getUserDetails() {
+		return this.userDetailsService.get();
 	}
 
 	@Delete(':uuid')
