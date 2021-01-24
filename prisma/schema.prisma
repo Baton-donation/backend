@@ -14,7 +14,7 @@ model Sentence {
   uuid String @id
   content String
   anonymousUUID String?
-  createdAt DateTime @default(now())
+  createdAt DateTime?
 }
 
 model UserDetails {

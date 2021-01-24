@@ -7,7 +7,14 @@ export class SentencesService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async create(sentence: SentenceDto): Promise<SentenceDto> {
-		return this.prisma.sentence.create({data: sentence});
+		const includeDate = typeof sentence.anonymousUUID === 'string';
+
+		return this.prisma.sentence.create({
+			data: {
+				createdAt: includeDate ? new Date() : null,
+				...sentence
+			}
+		});
 	}
 
 	async delete(uuid: string) {

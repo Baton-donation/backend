@@ -9,8 +9,8 @@ describe('Sentences', () => {
 	let app: INestApplication;
 	const prismaService = {
 		sentence: {
-			create: async (payload: any) => Promise.resolve(payload.data),
-			delete: async () => Promise.resolve()
+			create: jest.fn(),
+			delete: jest.fn()
 		}
 	};
 
@@ -27,9 +27,10 @@ describe('Sentences', () => {
 	});
 
 	it('/POST sentences', async () => {
-		const payload = {uuid: uuidv4(), content: 'A sample sentence'};
+		const payload = {uuid: uuidv4(), content: 'A sample sentence', createdAt: null};
 
 		const spy = jest.spyOn(prismaService.sentence, 'create');
+		prismaService.sentence.create.mockResolvedValue(payload);
 
 		await request(app.getHttpServer())
 			.post('/sentences')
@@ -41,31 +42,42 @@ describe('Sentences', () => {
 
 	it('/POST multiple sentences', async () => {
 		const payload = [
-			{uuid: uuidv4(), content: 'A sample sentence'},
-			{uuid: uuidv4(), content: 'Another sample sentence'}
+			{uuid: uuidv4(), content: 'A sample sentence', createdAt: null},
+			{uuid: uuidv4(), content: 'Another sample sentence', createdAt: null}
 		];
 
 		const spy = jest.spyOn(prismaService.sentence, 'create');
+		prismaService.sentence.create.mockImplementation(async (data: {data: Record<string, unknown>}) => Promise.resolve(data.data));
 
 		await request(app.getHttpServer())
-			.post('/sentences')
+			.post('/sentences/many')
 			.send(payload)
 			.expect(201, payload);
 
-		expect(spy).toHaveBeenCalledTimes(2);
+		expect(spy).toHaveBeenCalledTimes(payload.length);
 	});
 
 	it('/POST sentences with anonymous UUID', async () => {
 		const payload = {uuid: uuidv4(), content: 'A sample sentence', anonymousUUID: uuidv4()};
 
+		const now = new Date();
+
 		const spy = jest.spyOn(prismaService.sentence, 'create');
+		prismaService.sentence.create.mockImplementation(async (data: {data: any}) => {
+			if (data.data.createdAt) {
+				return {...data.data, createdAt: now};
+			}
+
+			return data.data;
+		});
 
 		await request(app.getHttpServer())
 			.post('/sentences')
 			.send(payload)
-			.expect(201, payload);
+			.expect(201, {createdAt: now.toISOString(), ...payload});
 
-		expect(spy).toHaveBeenCalledWith({data: payload});
+		// Check if service added createdAt property
+		expect(Object.prototype.hasOwnProperty.call(spy.mock.calls[0][0].data, 'createdAt')).toEqual(true);
 	});
 
 	it('/DELETE sentences', async () => {
@@ -78,6 +90,11 @@ describe('Sentences', () => {
 			.expect(200);
 
 		expect(spy).toHaveBeenCalledWith({where: {uuid}});
+	});
+
+	afterEach(() => {
+		prismaService.sentence.create.mockClear();
+		prismaService.sentence.delete.mockClear();
 	});
 
 	afterAll(async () => {
