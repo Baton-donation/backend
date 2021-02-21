@@ -5,6 +5,7 @@ import {PrismaModule} from './prisma/prisma.module';
 import {SentencesModule} from './sentences/sentences.module';
 import {KeysModule} from './keys/keys.module';
 import {UserDetailsModule} from './user-details/user-details.module';
+import {CodesModule} from './codes/codes.module';
 
 @Module({
 	imports: [
@@ -15,7 +16,8 @@ import {UserDetailsModule} from './user-details/user-details.module';
 		SentencesModule,
 		DownloadsModule,
 		KeysModule,
-		UserDetailsModule
+		UserDetailsModule,
+		CodesModule
 	],
 	controllers: [],
 	providers: []

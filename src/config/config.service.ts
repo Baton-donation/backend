@@ -4,6 +4,7 @@ import {Injectable} from '@nestjs/common';
 interface IEnv {
 	PUBLIC_KEY: string;
 	DATA_DIR: string;
+	AUTH_TOKEN: string;
 }
 
 @Injectable()
@@ -15,7 +16,8 @@ export class ConfigService {
 
 		this.env = {
 			PUBLIC_KEY: process.env.PUBLIC_KEY!,
-			DATA_DIR: process.env.DATA_DIR!
+			DATA_DIR: process.env.DATA_DIR!,
+			AUTH_TOKEN: process.env.AUTH_TOKEN!
 		};
 	}
 }
