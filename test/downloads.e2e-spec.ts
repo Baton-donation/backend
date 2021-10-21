@@ -57,14 +57,21 @@ describe('Downloads', () => {
 		await delay(1000);
 
 		const baseFindManyOptions = {
-			orderBy: {
-				createdAt: 'desc'
-			},
 			take: 10
 		};
 
-		expect(prismaService.sentence.findMany).toHaveBeenNthCalledWith(1, {...baseFindManyOptions, skip: 0});
-		expect(prismaService.sentence.findMany).toHaveBeenNthCalledWith(2, {...baseFindManyOptions, skip: 10});
+		expect(prismaService.sentence.findMany).toHaveBeenNthCalledWith(1, {
+			...baseFindManyOptions,
+			skip: 0,
+			cursor: undefined
+		});
+		expect(prismaService.sentence.findMany).toHaveBeenNthCalledWith(2, {
+			...baseFindManyOptions,
+			skip: 1,
+			cursor: {
+				uuid: sentences[9].uuid
+			}
+		});
 
 		// Fetch finished download
 		const inFlightRequest = request(app.getHttpServer())

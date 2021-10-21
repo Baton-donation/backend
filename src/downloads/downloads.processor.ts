@@ -8,6 +8,7 @@ import * as makeDir from 'make-dir';
 import {PrismaService} from 'src/prisma/prisma.service';
 import {ConfigService} from 'src/config/config.service';
 import {IJobData} from './types';
+import {Sentence} from '.prisma/client';
 
 const CHUNK_SIZE = 10;
 
@@ -32,15 +33,16 @@ export class DownloadsProcessor {
 
 			const count = await this.prisma.sentence.count();
 
+			let cursorId: Sentence['uuid'] | undefined;
 			for (let i = 0; i < count; i += CHUNK_SIZE) {
 				// eslint-disable-next-line no-await-in-loop
-				const rows = await this.prisma.sentence.findMany({
-					skip: i,
-					take: CHUNK_SIZE,
-					orderBy: {
-						createdAt: 'desc'
-					}
+				const rows: Sentence[] = await this.prisma.sentence.findMany({
+					skip: cursorId ? 1 : 0,
+					cursor: cursorId ? ({uuid: cursorId}) : undefined,
+					take: CHUNK_SIZE
 				});
+
+				cursorId = rows[rows.length - 1].uuid;
 
 				// Write
 				rows.forEach(row => gzip.write(JSON.stringify(row, undefined, 0) + '\n'));

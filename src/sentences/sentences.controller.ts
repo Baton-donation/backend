@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, HttpException, HttpStatus, Param, Post} from '@nestjs/common';
-import {PrismaClientKnownRequestError} from '@prisma/client';
+import {Prisma} from '@prisma/client';
 import {SentencesService} from './sentences.service';
 import {DeleteParameters, SentenceDto} from './types';
 
@@ -13,7 +13,7 @@ export class SentencesController {
 			const s = await this.sentencesService.create(body);
 			return s;
 		} catch (error: unknown) {
-			if ((error as PrismaClientKnownRequestError).code === 'P2002') {
+			if ((error as Prisma.PrismaClientKnownRequestError).code === 'P2002') {
 				throw new HttpException('UUID already exists', HttpStatus.BAD_REQUEST);
 			}
 
@@ -28,7 +28,7 @@ export class SentencesController {
 
 			return s;
 		} catch (error: unknown) {
-			if ((error as PrismaClientKnownRequestError).code === 'P2002') {
+			if ((error as Prisma.PrismaClientKnownRequestError).code === 'P2002') {
 				throw new HttpException('UUID already exists', HttpStatus.BAD_REQUEST);
 			}
 
@@ -43,7 +43,7 @@ export class SentencesController {
 
 			return {};
 		} catch (error: unknown) {
-			if ((error as PrismaClientKnownRequestError).code === 'P2016') {
+			if ((error as Prisma.PrismaClientKnownRequestError).code === 'P2016') {
 				throw new HttpException('UUID does not exist', HttpStatus.NOT_FOUND);
 			}
 
